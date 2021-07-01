@@ -38,7 +38,7 @@ function calExactTimeDiff() {
 
     let monthDiff = 0;
     let isDayAhead = secondDate.getDate() >= firstDate.getDate();
-    
+
     if (secondDate.getMonth() >= firstDate.getMonth()) {
         let diff = secondDate.getMonth() - firstDate.getMonth();
         monthDiff += (isDayAhead) ? diff : diff - 1;
@@ -62,6 +62,9 @@ function calExactTimeDiff() {
         )
         dayDiff = getDaysDiff(b4EndDate, secondDate);
     }
+
+    if (firstDate.getMonth() == secondDate.getMonth() && !isDayAhead)
+        monthDiff = 11;
 
     let exactTimeDiffParts = {
         yrs: getYearsDiff(firstDate, secondDate),
@@ -116,6 +119,7 @@ function getYearsDiff(startDate = new Date(), endDate = new Date()) {
 }
 
 function getMonthsDiff(startDate = new Date(), endDate = new Date()) {
+    if (startDate > endDate) [startDate, endDate] = [endDate, startDate];
     let monthsOfFullYears = getYearsDiff(startDate, endDate) * 12;
     let months = monthsOfFullYears;
     // the variable below is not necessary, but I kept it for understanding
@@ -126,6 +130,11 @@ function getMonthsDiff(startDate = new Date(), endDate = new Date()) {
         startDate.getDate()
     );
     let isDayAhead = endDate.getDate() >= yearsAfterStart.getDate();
+
+    if (startDate.getMonth() == endDate.getMonth() && !isDayAhead) {
+        months = 11;
+        return months;
+    }
 
     if (endDate.getMonth() >= yearsAfterStart.getMonth()) {
         let diff = endDate.getMonth() - yearsAfterStart.getMonth();
