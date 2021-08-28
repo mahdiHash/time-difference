@@ -1,8 +1,16 @@
 'use strict';
 
 function calculateTimeDiff() {
-  let firstDate = new Date(document.getElementById('firstDate').value);
-  let secondDate = new Date(document.getElementById('secondDate').value);
+  let dateInput1 = document.getElementById('firstDate').value;
+  let dateInput2 = document.getElementById('secondDate').value;
+  
+  if (dateInput1 == "" || dateInput2 == "") {
+    alert("Dates you entered are invalid");
+    return;
+  }
+
+  let firstDate = new Date(dateInput1);
+  let secondDate = new Date(dateInput2);
 
   if (firstDate > secondDate) [firstDate, secondDate] = [secondDate, firstDate];
 
